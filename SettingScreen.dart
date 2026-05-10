@@ -26,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       final data = snapshot.value as Map?;
 
       if (data == null || data.isEmpty) {
-        _showSnackbar('⚠️ No data found to export!', Colors.orange);
+        _showSnackbar(' No data found to export!', Colors.orange);
         return;
       }
 
@@ -45,7 +45,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return aDate.compareTo(bDate);
       });
 
-      // ✅ Build CSV with all fields
       final StringBuffer csv = StringBuffer();
       csv.writeln(
         'DateTime,'
@@ -72,10 +71,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'Chemical_Screening_${DateTime.now().millisecondsSinceEpoch}.csv';
 
       if (kIsWeb) {
-        // ✅ Web: browser download using JS interop
         _downloadWeb(csv.toString(), fileName);
       } else {
-        // ✅ Mobile: save and share
+        
         final dir = await getTemporaryDirectory();
         final file = File('${dir.path}/$fileName');
         await file.writeAsString(csv.toString());
@@ -85,15 +83,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       }
 
-      _showSnackbar('✅ Exported ${scans.length} records!', Colors.green);
+      _showSnackbar('Exported ${scans.length} records!', Colors.green);
     } catch (e) {
-      _showSnackbar('❌ Export Error: $e', Colors.red);
+      _showSnackbar(' Export Error: $e', Colors.red);
     } finally {
       setState(() => _isExporting = false);
     }
   }
 
-  // ✅ Web download without importing dart:html globally
   void _downloadWeb(String content, String fileName) {
     // Uses JS interop safely
     final blob = Uri.dataFromString(
