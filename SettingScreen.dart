@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../pages/web_support.dart';
 
-class SettingsScreen extends StatefulWidget {  // ✅ StatefulWidget for loading state
+class SettingsScreen extends StatefulWidget {  
   const SettingsScreen({super.key});
 
   @override
@@ -21,7 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() => _isExporting = true);
 
     try {
-      // ✅ Read from Firebase — no SQLite needed
+   
       final snapshot = await _ref.get();
       final data = snapshot.value as Map?;
 
